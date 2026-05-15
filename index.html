@@ -1,98 +1,36 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>Lei Ming's Auto-Trading Hub</title>
-    <style>
-        :root { --bg: #0b0f19; --blue: #00f3ff; --gold: #fbbf24; }
-        body { font-family: sans-serif; background: var(--bg); color: #fff; padding: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        h1 { color: var(--blue); text-shadow: 0 0 10px var(--blue); text-align: center; }
-        .card { background: #151b2b; border-radius: 10px; padding: 20px; margin-bottom: 15px; border: 1px solid #2e3c5a; }
-        .item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2e3c5a; }
-        .val { color: var(--gold); font-weight: bold; }
-        .total-box { background: var(--blue); color: #000; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.5rem; font-weight: bold; }
-        .footer { text-align: center; color: #64748b; font-size: 0.8rem; margin-top: 20px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雷鳴交易策略中控室</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>雷鳴自動計價交易中心</h1>
-        
-        <div class="total-box">
-            預估總資產價值: <span id="grand-total">0</span> CRR
-        </div>
+        <header>
+            <h1>⚡ 雷鳴交易策略中控室</h1>
+            <p>工欲善其事，必先利其器。拒絕多巴胺，專注價值投資。</p>
+        </header>
 
-        <div class="card">
-            <h3>核心物資 (Rare Cores)</h3>
-            <div id="cores-list"></div>
-        </div>
+        <main class="dashboard">
+            <section class="quick-links">
+                <h2>🔗 常用傳送門</h2>
+                <div class="link-grid" id="linkGrid">
+                    </div>
+            </section>
 
-        <div class="card">
-            <h3>遺跡零件 (Relic Parts)</h3>
-            <div id="relics-list"></div>
-        </div>
-
-        <div class="card">
-            <h3>其它資產</h3>
-            <div id="misc-list"></div>
-        </div>
-
-        <div class="footer">價格參考自 Vaulted Values | 自動計價系統 v1.0</div>
+            <section class="strategy-log">
+                <h2>📝 交易策略日誌</h2>
+                <div class="input-group">
+                    <input type="text" id="strategyInput" placeholder="輸入新的交易策略或觀察...">
+                    <button onclick="addStrategy()">記錄策略</button>
+                </div>
+                <ul id="strategyList">
+                    </ul>
+            </section>
+        </main>
     </div>
-
-<script>
-    // --- 1. 在這裡輸入你的庫存數量 ---
-    const inventory = {
-        "Infinity Core": 36,
-        "World Core": 16,
-        "Atomic Core": 14,
-        "Eternal Core": 2,
-        "Relic Part #1": 57,
-        "Relic Part #3": 49,
-        "Relic Part #2": 44,
-        "Relic Part #4": 51,
-        "Passive Shards": 31950,
-        "Bloodline Stones": 11154
-    };
-
-    // --- 2. 這裡設定參考匯率 (CRR) ---
-    const rates = {
-        "Infinity Core": 900,
-        "World Core": 150,
-        "Atomic Core": 80,
-        "Eternal Core": 1200,
-        "Relic Part #1": 0.33, // 1:300 換算
-        "Relic Part #3": 0.16, // 1:600 換算
-        "Relic Part #2": 0.5,  // 1:200 換算
-        "Relic Part #4": 0.5,
-        "Passive Shards": 0.5, // 1:2
-        "Bloodline Stones": 0.125 // 1:8
-    };
-
-    function render() {
-        let grandTotal = 112639; // 初始值含你原本有的 11萬 CRR
-        
-        const sections = {
-            "cores-list": ["Infinity Core", "World Core", "Atomic Core", "Eternal Core"],
-            "relics-list": ["Relic Part #1", "Relic Part #2", "Relic Part #3", "Relic Part #4"],
-            "misc-list": ["Passive Shards", "Bloodline Stones"]
-        };
-
-        for (let id in sections) {
-            let html = "";
-            sections[id].forEach(name => {
-                const count = inventory[name] || 0;
-                const value = Math.floor(count * rates[name]);
-                grandTotal += value;
-                html += `<div class="item"><span>${name} (x${count})</span><span class="val">≈ ${value} CRR</span></div>`;
-            });
-            document.getElementById(id).innerHTML = html;
-        }
-        document.getElementById("grand-total").innerText = grandTotal.toLocaleString();
-    }
-
-    render();
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
